@@ -1,23 +1,18 @@
-from flask import Flask, request
-from infer import Infer
+from flask import Flask, request, Response, send_file
+from src.infer import Infer
 
-import redis
+import cv2
+import numpy as np
+import sys
 import pickle
 
 app = Flask(__name__)
-cache = redis.Redis(host='redis', port = 6379)
 
-@app.route('/load', methods=['POST'])
-def load(): 
+@app.route('/infer/<key>', methods=['POST'])
+def inf(key):
+
+    payload = request.data
     infer = Infer()
-    dumped = pickle.dumps(infer)
-    key = request.args.get('key')
-    cache.set(key, dumped)
-    return f'{key} loaded'
+    res = infer.encode_image(infer.insert_bboxes(infer.decode(payload), infer.detect_encoded(payload)))
 
-@app.route('/unload/<key>')
-def call(key):
-    infer = pickle.loads(cache.get(key))
-    count = infer.increment()
-    cache.set(key, pickle.dumps(infer))
-    return f'Fui chamado {count} vezes'
+    return Response(response=res, status=200, mimetype="image/png")
