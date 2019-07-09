@@ -10,10 +10,11 @@
 
   <body>
     <form class="fileUpload" method="post" enctype="multipart/form-data">
-      <input type="file" name="files[]" multiple />
+      <input type="file" name="files[]"/>
+      <input type="text" name="server"/>
       <input class="fileSelect" type="submit" value="Upload" name="submit" />
     </form>
     <img class="result" id="result"/>
-    <script src="upload.js"></script>
+    <script src="page/upload.js"></script>
   </body>
 </html>

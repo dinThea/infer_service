@@ -2,10 +2,9 @@ version: '2.3'
 services:
   api:
     build: ./api
-    runtime: nvidia
     environment:
-      - NVIDIA_VISIBLE_DEVICES=all
-      - DISPLAY=$DISPLAY
+    #   - NVIDIA_VISIBLE_DEVICES=all
+    #   - DISPLAY=$DISPLAY
       - LANG=C.UTF-8
       - LC_ALL=C.UTF-8
     volumes: 
@@ -15,6 +14,4 @@ services:
       - ./src/:/api/src/
     ports: 
     - 5000:5000
-    # command: /bin/bash -c 'cd /api && python3 test_model.py'
-  redis:
-    image: redis:alpine
+    # runtime: nvidia

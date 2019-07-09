@@ -5,7 +5,7 @@ import cv2
 import time
 import numpy as np
 
-addr = 'http://iagoeli.pagekite.me'
+addr = 'http://localhost:5000'
 test_url = addr + '/infer/yolo'
 
 # prepare headers for http request
