@@ -4,7 +4,7 @@ form.addEventListener('submit', e => {
     e.preventDefault()
 
     const files = document.querySelector('[type=file]').files
-    const url = `http://${document.querySelector('[type=text]').value}/infer/yolo`
+    const url = `https://${document.querySelector('[type=text]').value}/infer/yolo`
     const formData = new FormData()
 
     formData.append('files[]', files[0])
