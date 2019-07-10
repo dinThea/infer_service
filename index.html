@@ -9,12 +9,25 @@
   </head>
 
   <body>
-    <form class="fileUpload" method="post" enctype="multipart/form-data">
-      <input type="file" name="files[]"/>
-      <input type="text" name="server"/>
-      <input class="fileSelect" type="submit" value="Upload" name="submit" />
-    </form>
+    <div id="large-header" class="large-header">
+      <canvas id="demo-canvas"></canvas>
+      <h1 class="main-title">Inference <span class="thin">Server</span></h1>
+      <form class="fileUpload" method="post" enctype="multipart/form-data">
+        <input class="fileSearch" type="file" name="files[]"/>
+        <div class="wrap">
+          <div class="URL"> http:// </div>
+          <input class="fileName" type="text" name="server"/>
+          <div class="URL"> /infer/yolo </div>
+        </div>
+        <input class="fileSelect" type="submit" value="Upload" name="submit" />
+      </form>
+    </div>
+    
     <img class="result" id="result"/>
     <script src="page/upload.js"></script>
+    <script src='https://www.marcoguglie.it/Codepen/AnimatedHeaderBg/demo-1/js/EasePack.min.js'></script>
+    <script src='https://www.marcoguglie.it/Codepen/AnimatedHeaderBg/demo-1/js/rAF.js'></script>
+    <script src='https://www.marcoguglie.it/Codepen/AnimatedHeaderBg/demo-1/js/TweenLite.min.js'></script>
+    <script src="page/animation.js"></script>
   </body>
 </html>
