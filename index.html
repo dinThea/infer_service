@@ -13,7 +13,7 @@
       <canvas id="demo-canvas"></canvas>
       <h1 class="main-title">Inference <span class="thin">Server</span></h1>
       <form class="fileUpload" method="post" enctype="multipart/form-data">
-        <input class="fileSearch" type="file" accept="image/*" capture="camera" name="files[]" capture/>
+        <input class="fileSearch" type="file" accept="image/*" name="files[]"/>
         <div class="wrap">
           <div class="URL"> http:// </div>
           <input class="fileName" type="text" name="server"/>
@@ -24,6 +24,7 @@
     </div>
     
     <img class="result" id="result"/>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="page/upload.js"></script>
     <script src='https://www.marcoguglie.it/Codepen/AnimatedHeaderBg/demo-1/js/EasePack.min.js'></script>
     <script src='https://www.marcoguglie.it/Codepen/AnimatedHeaderBg/demo-1/js/rAF.js'></script>

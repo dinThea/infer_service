@@ -1,7 +1,7 @@
 import cv2, sys
 import numpy as np
 
-def yolo_parser (output, width, height, threshhold):
+def yolo_parser (output, width, height, threshhold, names):
     
     return_list = []
     for out in output:
@@ -16,7 +16,7 @@ def yolo_parser (output, width, height, threshhold):
 
                 x = int(centerX - (w / 2))
                 y = int(centerY - (h / 2))
-                return_list.append ((x,y,(x+w),(y+h)))
+                return_list.append ((x,y,(x+w),(y+h),names[class_id]))
         
     return return_list
 
@@ -31,6 +31,7 @@ class Infer:
         self.net = cv2.dnn.readNetFromDarknet(cfg, weights)
         self.net.setPreferableBackend(cv2.dnn.DNN_BACKEND_DEFAULT)
         self.parser = parser[parser_type]
+        self.names = open('src/coco.names').read().split('\n')
         self.threshold = threshold
 
     def getOutputLayers(self):
@@ -47,7 +48,7 @@ class Infer:
         self.net.setInput(blob)
         outs = self.net.forward(self.getOutputLayers())
         
-        return self.parser(outs, w, h, self.threshold)
+        return self.parser(outs, w, h, self.threshold, self.names)
 
     def detect_encoded(self, raw_image):
         
@@ -63,7 +64,10 @@ class Infer:
     def insert_bboxes(self, image, results):
 
         res = image.copy()
-        for x0, y0, x1, y1 in results:
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        for x0, y0, x1, y1, label in results:
+            cv2.rectangle(res, (x0, y0-22), (x1, y0), (0,255,0), -1)
+            cv2.putText(res, label, (x0, y0-4), font, 1,(255,255,255),2,cv2.LINE_AA)
             cv2.rectangle(res, (x0,y0), (x1,y1), (0,255,0), 2)
 
         return res
