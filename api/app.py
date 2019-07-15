@@ -2,6 +2,7 @@
 import sys
 from models import loaded_models
 from starlette.responses import Response, StreamingResponse, HTMLResponse
+from starlette.middleware.cors import CORSMiddleware
 from starlette.applications import Starlette
 import asyncio
 
@@ -10,9 +11,10 @@ import numpy as np
 import sys    
 
 api = Starlette()
+api.add_middleware(CORSMiddleware) #, allow_origins=['*', 'localhost:80', 'localhost'], allow_methods=['POST', 'GET'])
 api.debug = True
 
-@api.route('/infer/{key}', methods=['POST', 'GET', 'OPTIONS'])
+@api.route('/infer/{key}', methods=['POST', 'GET', 'OPTIONS', 'OPTION'])
 async def inf(request):
     if (request.method == 'POST'):
         key     = request.path_params['key']
@@ -25,6 +27,7 @@ async def inf(request):
 
         return Response(res, status_code=200)
     else:
+        print ()
         return Response('CORS', status_code=200)
 
 

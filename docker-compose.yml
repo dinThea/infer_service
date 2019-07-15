@@ -14,5 +14,15 @@ services:
       - ./src/:/api/src/
     ports: 
     - 5000:5000
+    restart: always
     command: /bin/bash -c "cd /api && uvicorn app:api --reload --port=5000 --host=0.0.0.0"
     # runtime: nvidia
+  nginx:
+    image: nginx
+    restart: always
+    volumes:
+      - ./index.html:/var/www/tdc/index.html
+      - ./page:/var/www/tdc/page
+      - ./nginx/sites:/etc/nginx/conf.d
+    ports:
+      - 80:80
