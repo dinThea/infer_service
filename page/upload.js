@@ -12,7 +12,6 @@ form.addEventListener('submit', e => {
     fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'image/png' },
-            mode: "no-cors",
             body: files[0]
         })
         .then((response) => response.blob())
