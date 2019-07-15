@@ -9,20 +9,21 @@ addr = 'http://localhost:5000'
 test_url = addr + '/infer/yolo'
 
 # prepare headers for http request
-content_type = 'image/png'
+content_type = 'image/jpg'
 headers = {'content-type': content_type}
 
-img = cv2.imread('image.png')
+img = cv2.imread('image.jpg')
+shape = img.shape
+_, img_encoded = cv2.imencode('.jpg', img)
+nparr1 = np.fromstring(img_encoded.tostring(), dtype=np.uint8)
+image_string = img_encoded.tostring()
 
-_, img_encoded = cv2.imencode('.png', img)
-# send http request with image and receive response
 init_time = time.time()
-response = requests.post(test_url, data=img_encoded.tostring(), headers=headers)
-print (f'Duration: {1/(time.time() - init_time)}')
-# decode response
+response = requests.post(test_url, data=img_encoded.tostring())
+print (1/(time.time() - init_time))
 image = response.__dict__['_content']
-
-nparr = np.frombuffer(image, dtype=np.uint8)
+nparr = np.fromstring(image, dtype=np.uint8)
+nparr = np.resize(nparr, shape)
 img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
-cv2.imwrite('result.png', img)
+cv2.imwrite('result.jpg', img)

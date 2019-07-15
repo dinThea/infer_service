@@ -14,4 +14,5 @@ services:
       - ./src/:/api/src/
     ports: 
     - 5000:5000
+    command: /bin/bash -c "cd /api && uvicorn app:api --reload --port=5000 --host=0.0.0.0"
     # runtime: nvidia
